@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      .container {
+        max-width: 90%;
+        margin: 40px auto;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      
+      .user-card {
+        width: 200px;
+        padding: 20px;
+        margin-bottom: 20px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #f9f9f9;
+        border-radius: 10px;
+      }
+      
+      .user-card img {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        margin-right: 20px;
+      }
+      
+      .user-info {
+        flex: 1;
+      }
+      
+      .user-info p {
+        margin-bottom: 10px;
+      }
+      
+      .delete-btn {
+        background-color: #ff0000;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 10px;
+      }
+      
+      .delete-btn:hover {
+        background-color: #cc0000;
+      }
+      
+      h2 {
+        padding-top: 20px;
+        text-align: center;
+      }
+    </style>
+</head>
+<body>
+  <h2>User Details</h2>
+  <div class="container" id="user-container">
+    <!-- user cards will be added here -->
+  </div>
+
+  <script>
+    // Get the stored users from local storage
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+
+    // Create a user card for each user
+    const userCards = users.map((user, index) => `
+      <div class="user-card">
+        <img src="${user.image}" alt="User   Image">
+        <div class="user-info">
+          <p><strong>Name:</strong> ${user.name}</p>
+          <p><strong>Gender:</strong> ${user.gender}</p>
+          <p><strong>Email:</strong> ${user.email}</p>
+          <p><strong>Mobile:</strong> ${user.mobile}</p>
+          <p><strong>State:</strong> ${user.state}</p>
+          <p><strong>District:</strong> ${user.district}</p>
+          <button class="delete-btn" onclick="deleteUser  (${index})">Delete</button>
+        </div>
+      </div>
+    `).join('');
+
+    // Add the user cards to the container
+    document.getElementById('user-container').innerHTML = userCards;
+  </script>
+
+  <script>
+    function deleteUser(index) {
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+      users.splice(index, 1);
+      localStorage.setItem('users', JSON.stringify(users));
+      window.location.reload();
+    }
+  </script>
+</body>
+</html>
